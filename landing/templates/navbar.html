@@ -1,0 +1,65 @@
+{% load static %}
+
+<!-- Main Container -->
+<div class="content-wrapper px-4">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+
+            <!-- Navbar Brand Logo -->
+            <a class="navbar-brand {% if not user.is_authenticated %}not-authenticated{% endif %}" 
+            {% if user.is_authenticated %}
+                href="{% url 'post-list' %}"
+            {% else %}
+                href="{% url 'index' %}"
+            {% endif %}>
+                <img src="{% static 'media/logo.webp' %}" alt="Logo" style="height: 50px;">
+            </a>
+            
+            <!-- Navbar Contents -->
+            <div class="form-with-dropdown">
+                <!-- Navbar List -->
+                <ul class="navbar-nav me-auto mb-lg-0">
+                </ul>
+
+                <!-- User Authentication Related Features -->
+                {% if user.is_authenticated %}
+                    <div class="d-flex align-items-center">
+
+                        <!-- Profile Search Form -->
+                        <form class="d-flex me-3" method="GET" action="{% url 'profile-search' %}">
+                            <div class="input-group">
+                                <!-- Profile Search Input -->
+                                <input type="text" class="form-control form-control-nav" placeholder="Username" 
+                                    aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+                                
+                                <!-- Profile Search Button -->
+                                <button class="remove-default-btn ps-2" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- User Dropdown Menu -->
+                        <div class="custom-dropdown">
+                            <a class="nav-profile-pic">
+                                <img src="{{ request.user.profile.picture.url|default:'user-default_zft92h' }}" 
+                                     alt="User Profile">
+                            </a>
+                            <div class="dropdown-content">
+                                <a href="{% url 'profile' request.user.profile.pk %}">
+                                    <i class="fas fa-user me-2"></i>Profile
+                                </a>
+                                <a href="{% url 'account_logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+                                </a>
+                            </div>
+                        </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+</div>
