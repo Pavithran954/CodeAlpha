@@ -1,0 +1,40 @@
+{% extends 'base_grid.html' %}
+{% load crispy_forms_tags %}
+
+{% block grid_content %}
+
+<!-- Main Content Container -->
+
+<div class="post-container mt-4">
+
+    <!-- Navigation Section -->
+    <div class="mt-2">
+            <!-- Back to Post Button -->
+            <a href="{% url 'post-detail' object.pk %}">
+                <button class="btn btn-dark w-100" aria-label="Go back to the post">
+                    <i class="fa-regular fa-circle-left" style="color: white;" aria-hidden="true"></i> Back to Post
+                </button>
+            </a>
+    </div>
+
+    <!-- Edit Post Header -->
+    <div class="mt-3">
+           <h5>Edit Post</h5> 
+    </div>
+
+    <!-- Edit Post Form -->
+    <div class="mt-3 mb-5">
+            
+        <!-- Form to Edit Post -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form | crispy }}
+
+            <!-- Save Button -->
+            <div class="d-grid gap-2">
+                <button class="btn btn-success mt-3" aria-label="Save the edited post">Save</button>
+            </div>
+        </form> 
+    </div>
+</div>
+{% endblock grid_content %}
